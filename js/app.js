@@ -188,6 +188,8 @@
     if (game.over && game.won) return;
     if (game.over) return;
     game.select(idx);
+    var cell = game.cell(idx);
+    activeNum = cell && cell.value ? cell.value : 0;
     renderAll();
     persist();
   }
