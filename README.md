@@ -1,107 +1,67 @@
-# Default Project
+# Sudoku Master 數獨大師
 
-一個支援 **TypeScript/Node.js** 與 **Python** 的現代軟體專案範本，
-整合 linting、格式化、型別檢查、測試與 CI/CD 流程。
+一個支援**多關卡、音效、計時、提示與統計**的數獨網頁遊戲。
+純 HTML/CSS/JS 實作、零依賴，可離線開啟，也可部署為永久公開網頁。
 
-## 技術棧
+## 線上遊玩
 
-| 類別 | 工具 |
+部署後網址：https://weioufan1129.github.io/default-project/
+
+## 本機試玩
+
+直接雙擊 `index.html` 即可在瀏覽器開啟，無需安裝任何東西。
+
+## 遊戲特色
+
+| 類別 | 內容 |
 |------|------|
-| 執行環境 | Node.js 24 / Python 3.11 |
-| 語言 | TypeScript 5.9 / Python 3.11 |
-| 套件管理 | npm 11 / pip + venv |
-| Lint | ESLint / ruff、flake8 |
-| 格式化 | Prettier / black |
-| 型別檢查 | tsc / mypy |
-| 測試 | vitest / pytest |
-| CI/CD | GitHub Actions |
+| 難度 | 簡單 / 中等 / 困難 / 高手（唯一解保證） |
+| 關卡 | 每過一關自動進入下一關，等級持續累積 |
+| 音效 | 選取、填數、錯誤、提示、過關皆有音效（可開關） |
+| 筆記 | 候選數模式，自動凸顯行列宮與相同數字 |
+| 輔助 | 復原（↺）、提示（💡）、鍵盤操作 |
+| 統計 | 勝局/最快戰績/提示次數（localStorage 保存） |
+| 存檔 | 自動保存進度，關閉瀏覽器後可續玩 |
+| 主題 | 經典 / 暗黑 / 霓虹 |
+| 裝置 | 桌機與手機皆可玩（響應式版面） |
 
-## 快速開始
+## 操作方式
 
-### 前置需求
+- 點選格子，再按 1–9 填入數字
+- 開啟 ✎ 筆記模式填候選數
+- `⌫` 清除、`↺` 復原、`💡` 提示、`↻` 新遊戲
+- 鍵盤：方向鍵移動、`N` 筆記、`U` 復原、`H` 提示、`R` 新局
+- 錯誤超過 3 次挑戰結束
 
-- Node.js >= 24
-- Python >= 3.11
-- Git
-
-### 安裝
-
-```bash
-# 複製專案
-git clone <repo-url> && cd <repo>
-
-# 安裝 Node.js 相依套件
-npm install
-
-# 建立 Python 虛擬環境並安裝相依套件
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # macOS / Linux
-pip install -r requirements.txt
-
-# 複製環境變數範本
-cp .env.example .env
-```
-
-### 設定
-
-複製 `.env.example` 為 `.env` 並填入實際值。所有環境變數皆須在此指定。
-
-### 常用指令
-
-```bash
-# Node.js / TypeScript
-npm run dev          # 開發模式執行
-npm run build        # 編譯 TypeScript
-npm start            # 執行編譯後程式
-npm run lint         # ESLint 檢查
-npm run format       # Prettier 格式化
-npm run typecheck    # tsc 型別檢查
-npm test             # 執行測試
-
-# Python
-python -m black src tests        # 格式化
-python -m ruff check src tests   # lint
-python -m mypy src               # 型別檢查
-python -m pytest                 # 執行測試
-```
-
-## 專案結構
+## 檔案結構
 
 ```text
 .
-├── .github/
-│   └── workflows/   # CI/CD 工作流
-├── .vscode/         # VS Code 設定與推薦擴充
-├── config/          # 應用程式設定檔
-├── docs/            # 專案文件
-├── scripts/         # 開發/部署輔助腳本
-├── src/             # TypeScript 原始碼
-│   └── <module>/
-├── tests/           # 測試程式碼（pytest / vitest）
-├── .editorconfig    # 跨編輯器格式設定
-├── .env.example     # 環境變數範本
-├── .flake8          # flake8 設定
-├── .gitignore
-├── .prettierrc      # Prettier 設定
-├── eslint.config.mjs # ESLint 設定
-├── package.json     # Node.js 專案設定
-├── pyproject.toml   # Python 專案設定
-├── requirements.txt # Python 相依套件
-├── tsconfig.json    # TypeScript 設定
+├── index.html        # 遊戲頁面
+├── css/style.css     # 響應式樣式與主題
+├── js/
+│   ├── config.js     # 難度與設定
+│   ├── sudoku.js     # 數獨產生器與求解器
+│   ├── sound.js      # WebAudio 音效
+│   ├── stats.js      # 統計與紀錄
+│   ├── renderer.js   # 棋盤渲染
+│   ├── game.js       # 遊戲邏輯
+│   └── app.js        # 主程式（UI/鍵盤/計時）
 └── README.md
 ```
 
-## 測試
+## 部署至 GitHub Pages
 
 ```bash
-npm test          # 執行 TypeScript 測試
-python -m pytest  # 執行 Python 測試
+# 推送至 GitHub
+git add -A && git commit -m "Add sudoku game" && git push
+
+# 由 gh CLI 啟用 GitHub Pages（main 分支根目錄）
+gh api -X POST "repos/{owner}/{repo}/pages" -H "Accept: application/vnd.github+json" \
+  -f source[branch]=main -f source[path]=/
 ```
 
-## 部署
-
-待補。
+啟用後網址格式：`https://<owner>.github.io/<repo>/`
 
 ## 授權
 

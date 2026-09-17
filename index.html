@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Sudoku Master — 多關卡數獨網頁遊戲，支援音效、計時、提示與統計">
+  <title>Sudoku Master 數獨大師</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect x=%2220%22 y=%2220%22 width=%2260%22 height=%2260%22 fill=%22steelblue%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22>9</text></svg>">
+</head>
+<body>
+  <div id="app">
+    <header id="app-header">
+      <h1>🔢 Sudoku <span>Master</span></h1>
+      <div id="level-badge">第 <b id="level-num">1</b> 關</div>
+      <div id="header-actions">
+        <select id="theme-select" title="主題"></select>
+        <button id="sound-toggle" class="icon-btn" title="音效">🔊</button>
+        <button id="stats-btn" class="icon-btn" title="統計">📊</button>
+        <button id="help-btn" class="icon-btn" title="說明">❓</button>
+      </div>
+    </header>
+
+    <div id="control-bar">
+      <div class="stat-chip"><span class="chip-label">時間</span><span id="timer" class="chip-value">00:00</span></div>
+      <div class="stat-chip"><span class="chip-label">錯誤</span><span id="mistakes" class="chip-value">0</span></div>
+      <div class="stat-chip"><span class="chip-label">最佳</span><span id="best-time" class="chip-value">--</span></div>
+    </div>
+
+    <nav id="difficulty-bar" role="tablist">
+      <button class="diff-btn" data-diff="easy">簡單</button>
+      <button class="diff-btn" data-diff="medium">中等</button>
+      <button class="diff-btn" data-diff="hard">困難</button>
+      <button class="diff-btn" data-diff="expert">高手</button>
+    </nav>
+
+    <section id="board-wrap">
+      <div id="board" role="grid" aria-label="數獨棋盤"></div>
+    </section>
+
+    <section id="num-pad" aria-label="數字鍵盤">
+      <div id="pad-numbers"></div>
+      <div id="pad-actions">
+        <button class="pad-action" data-action="erase" title="清除 (Del)">⌫</button>
+        <button class="pad-action" data-action="notes" title="筆記模式 (N)">✎</button>
+        <button class="pad-action" data-action="undo" title="復原 (U)">↺</button>
+        <button class="pad-action" data-action="hint" title="提示 (H)">💡</button>
+        <button class="pad-action" data-action="new" title="新遊戲">↻</button>
+      </div>
+    </section>
+
+    <footer id="app-footer">
+      <p>點選格子後輸入數字 · 開啟 ✎ 筆記模式可填候選數 · 支援鍵盤</p>
+    </footer>
+  </div>
+
+  <div id="modal-overlay" class="hidden">
+    <div id="dialog-box" class="dialog">
+      <h2 id="dialog-title"></h2>
+      <div id="dialog-body"></div>
+      <div id="dialog-actions"></div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/sudoku.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
