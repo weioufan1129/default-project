@@ -1,0 +1,17 @@
+# Python 開發相依套件
+# 安裝：pip install -r requirements.txt
+
+# Lint / 格式化
+black==26.5.1
+ruff==0.16.8
+flake8==7.3.0
+
+# 型別檢查
+mypy==2.3.1
+
+# 測試
+pytest==9.1.1
+pytest-cov
+
+# 互動式開發
+ipython==9.17.1
