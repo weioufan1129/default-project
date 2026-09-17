@@ -123,7 +123,7 @@
   }
 
   function renderCell(elm, cell, selected) {
-    elm.classList.remove('given', 'selected', 'same', 'hl', 'conflict', 'has-value', 'is-notes');
+    elm.classList.remove('given', 'selected', 'same', 'hl', 'conflict', 'has-value', 'is-notes', 'numhl');
     elm.classList.remove('p-1', 'p-2', 'p-3', 'p-4', 'p-5', 'p-6', 'p-7', 'p-8', 'p-9');
     elm.textContent = '';
     if (!cell) return;
@@ -132,6 +132,7 @@
     if (cell.hl) elm.classList.add('hl');
     if (cell.same) elm.classList.add('same');
     if (cell.conflict) elm.classList.add('conflict');
+    if (cell.numhl) elm.classList.add('numhl');
     if (cell.value) {
       elm.classList.add('has-value');
       elm.textContent = String(cell.value);

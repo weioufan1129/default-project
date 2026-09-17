@@ -24,6 +24,7 @@
   var padNumbers = document.getElementById('pad-numbers');
   var padActions = document.querySelectorAll('.pad-action');
   var notesMode = false;
+  var activeNum = 0;
   var notesBtn = null;
   var lastNewGameTime = 0;
 
@@ -109,6 +110,7 @@
       b.textContent = String(n);
       b.addEventListener('click', function () {
         Sound.unlock();
+        toggleActiveNum(parseInt(this.dataset.num, 10));
         inputNumber(parseInt(this.dataset.num, 10));
       });
       b.addEventListener('contextmenu', function (e) {
@@ -141,6 +143,7 @@
     game = new GG.Game(Stats.getLevel(), diff);
     game.generate();
     notesMode = false;
+    activeNum = 0;
     updateNotesBtn();
     mistakesEl.textContent = '0';
     bestTimeEl.textContent = '--';
@@ -161,6 +164,7 @@
       mistakesEl.textContent = String(game.mistakes);
       updateBestDisplay(game.diff);
       notesMode = false;
+      activeNum = 0;
       updateNotesBtn();
       renderAll();
       return;
@@ -186,6 +190,11 @@
     game.select(idx);
     renderAll();
     persist();
+  }
+
+  function toggleActiveNum(n) {
+    activeNum = n;
+    renderAll();
   }
 
   function inputNumber(n) {
@@ -294,7 +303,9 @@
     if (overlay.classList.contains('hidden')) {
       if (k >= '1' && k <= '9') {
         e.preventDefault();
-        inputNumber(parseInt(k, 10));
+        var kn = parseInt(k, 10);
+        toggleActiveNum(kn);
+        inputNumber(kn);
         return;
       }
       switch (k) {
@@ -350,7 +361,8 @@
         selected: c.selected,
         hl: c.hl,
         same: c.same,
-        conflict: c.conflict
+        conflict: c.conflict,
+        numhl: activeNum > 0 && c.value === activeNum
       };
     });
     R.renderBoard(boardEl, show);
@@ -358,6 +370,20 @@
     mistakesEl.textContent = String(game.mistakes);
     levelNumEl.textContent = String(game.level);
     updateBestDisplay(game.diff);
+    updateNumButtons();
+  }
+
+  function updateNumButtons() {
+    var btns = padNumbers.children;
+    for (var n = 1; n <= 9; n++) {
+      var b = btns[n - 1];
+      if (!b) continue;
+      var isActive = activeNum === n;
+      var isDone = game && game.isNumberComplete(n);
+      b.classList.toggle('active', isActive);
+      b.classList.toggle('done', !!isDone);
+      b.disabled = !!isDone;
+    }
   }
 
   function updateBestDisplay(diff) {

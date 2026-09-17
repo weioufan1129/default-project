@@ -228,6 +228,20 @@
     return this.won;
   };
 
+  Game.prototype.countOf = function (num) {
+    var count = 0;
+    this.cells.forEach(function (c) {
+      if (c.value === num && !c.conflict && this.solution[c.row][c.col] === num) {
+        count++;
+      }
+    }, this);
+    return count;
+  };
+
+  Game.prototype.isNumberComplete = function (num) {
+    return this.countOf(num) === 9;
+  };
+
   Game.prototype.markLost = function () {
     this.over = true;
     this.running = false;
